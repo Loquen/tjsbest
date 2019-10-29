@@ -20,9 +20,10 @@ CATEGORIES = (
 
 class Item(models.Model):
   title = models.CharField(max_length=100)
-  votes = models.IntegerField()
-  status = models.BooleanField()
-  amazon_id = models.CharField(max_length=100)
+  votes = models.IntegerField(default=1)
+  status = models.BooleanField(default=False)
+  amazon_id = models.CharField(max_length=100, default='')
+  image_url = models.CharField(max_length=200, default='')
   categories = models.CharField(
     max_length=1,
     choices=CATEGORIES,
@@ -35,16 +36,8 @@ class Item(models.Model):
   )
   user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
   def __str__(self):
     return self.title
-
-class Photo(models.Model):
-  url = models.CharField(max_length=200)
-  item = models.ForeignKey(Item, on_delete=models.CASCADE)
-
-  def __str__(self):
-    return f"Photo for item_id: {self.item_id} @{self.url}"
 
 class Comment(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -55,7 +48,12 @@ class Comment(models.Model):
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
-  favorite_item = models.ForeignKey(Item, on_delete=models.CASCADE)
+  favorite_item = models.ForeignKey(
+    Item, 
+    on_delete=models.CASCADE,
+    blank=True,
+    null=True
+  )
 
   @receiver(post_save, sender=User)
   def create_user_profile(sender, instance, created, **kwargs):
