@@ -19,7 +19,15 @@
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Trader Joe's Best</a></li>
         </ul>
         <ul class="right">
-          <li><a href="/about">About</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'index' %}">All Items</a></li>
+            <li><a href="{% url 'items_create' %}">Add Item</a></li>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+          {% else %}
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}">Log In</a></li>
+          {% endif %}
         </ul>
       </div>
     </nav>
@@ -29,7 +37,8 @@
     {% endblock %}
   </main>
   <footer class="page-footer blue-grey darken-1">
-    <div class="right">Created with &hearts; in Oakland, CA, &copy; 2019 Trader Joe's Best &nbsp;</div>
+    <div class="left">&nbsp;&nbsp;Created with &hearts; in Oakland, CA</div>
+    <div class="right"> &copy; 2019 Trader Joe's Best &nbsp;</div>
   </footer>
 </body>
 </html>

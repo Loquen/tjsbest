@@ -3,8 +3,10 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Item, Comment
+from .forms import CommentForm
 import uuid
 import boto3
 
@@ -20,8 +22,28 @@ def about(request):
 class ItemList(ListView):
   model = Item
 
-class ItemDetail(DetailView):
-  model = Item
+# class ItemDetail(DetailView):
+#   model = Item
+def item_detail(request, item_id):
+  item = Item.objects.get(id=item_id)
+  comments = Comment.objects.filter(item=item_id)
+  comment_form = CommentForm()
+  return render(request, 'items/detail.html', {
+    'item': item,
+    'comments': comments,
+    'comment_form': comment_form,
+  })
+
+@login_required
+def add_comment(request, item_id):
+  form = CommentForm(request.POST)
+  if form.is_valid():
+    item = Item.objects.get(id=item_id)
+    new_comment = form.save(commit=False)
+    new_comment.item = item
+    new_comment.user = request.user
+    new_comment.save()
+  return redirect('items_detail', item_id=item_id)
 
 class ItemCreate(LoginRequiredMixin, CreateView):
   model = Item
@@ -64,7 +86,7 @@ def add_photo(request, item_id):
       item.save()
     except:
       print('An error occurred uploading file to S3')
-  return redirect('detail', item_id=item_id)
+  return redirect('items_detail', item_id=item_id)
 
 def signup(request):
   error_message = ''

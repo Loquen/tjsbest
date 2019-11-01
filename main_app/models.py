@@ -41,6 +41,7 @@ class Item(models.Model):
 
 class Comment(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
+  item = models.ForeignKey(Item, on_delete=models.CASCADE)
   text = models.CharField(max_length=250)
 
   def __str__(self):

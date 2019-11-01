@@ -9,6 +9,10 @@ main {
 }
 
 footer {
-  padding: 0 15px 15px 0px;
+  padding: 0 15px 15px 15px;
   text-align: right;
+}
+
+.item-image {
+  height: 300px;
 }
