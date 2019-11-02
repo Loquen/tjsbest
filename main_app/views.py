@@ -88,6 +88,19 @@ def add_photo(request, item_id):
       print('An error occurred uploading file to S3')
   return redirect('items_detail', item_id=item_id)
 
+def items_upvote(request, item_id):
+  # find item by id and increment 
+  item = Item.objects.get(id=item_id)
+  item.votes += 1 
+  item.save()
+  return redirect('index')
+
+def items_downvote(request, item_id):
+  item = Item.objects.get(id=item_id)
+  item.votes -= 1 
+  item.save()
+  return redirect('index')
+
 def signup(request):
   error_message = ''
   if request.method == 'POST':
