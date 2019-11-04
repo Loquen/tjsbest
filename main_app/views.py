@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item, Comment
+from .models import Item, Comment, Vote
 from .forms import CommentForm
 import uuid
 import boto3
@@ -27,6 +27,7 @@ class ItemList(ListView):
 def item_detail(request, item_id):
   item = Item.objects.get(id=item_id)
   comments = Comment.objects.filter(item=item_id)
+  print(comments)
   comment_form = CommentForm()
   return render(request, 'items/detail.html', {
     'item': item,
@@ -43,6 +44,11 @@ def add_comment(request, item_id):
     new_comment.item = item
     new_comment.user = request.user
     new_comment.save()
+  return redirect('items_detail', item_id=item_id)
+
+@login_required
+def remove_comment(request, item_id, comment_id):
+  Comment.objects.get(id=comment_id).delete()
   return redirect('items_detail', item_id=item_id)
 
 class ItemCreate(LoginRequiredMixin, CreateView):
@@ -89,10 +95,19 @@ def add_photo(request, item_id):
   return redirect('items_detail', item_id=item_id)
 
 def items_upvote(request, item_id):
-  # find item by id and increment 
-  item = Item.objects.get(id=item_id)
-  item.votes += 1 
-  item.save()
+  try:
+    vote = Vote.objects.get(item=item_id, user=request.user)
+  except Vote.DoesNotExist:
+    vote = None
+  
+  if vote is None:
+    # find item by id and increment 
+    item = Item.objects.get(id=item_id)
+    vote = Vote(item=item, user=request.user)
+    item.votes += 1 
+    vote.save()
+    item.save()
+  
   return redirect('index')
 
 def items_downvote(request, item_id):

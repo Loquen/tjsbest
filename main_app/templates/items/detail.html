@@ -37,12 +37,16 @@
     </form>
     <table class="striped">
       <thead>
-        <tr><th>Comment</th></tr>
+        <tr><th>Comments</th></tr>
       </thead>
       <tbody>
         {% for comment in item.comment_set.all %}
           <tr>
+            <td><strong>{{comment.user.username|title}}</strong></td>
             <td>{{comment.text}}</td>
+            {% if user == comment.user %}
+              <td><a href="{% url 'remove_comment' item.id comment.id %}">Delete</a></td>
+            {% endif %}
           </tr>
         {% endfor %}
       </tbody>
