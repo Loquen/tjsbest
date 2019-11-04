@@ -1,0 +1,1 @@
+web: gunicorn tjsbest.wsgi
