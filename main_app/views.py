@@ -5,7 +5,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item, Comment, Vote
+from django.contrib.auth.models import User
+from .models import Item, Comment, Vote, Profile
 from .forms import CommentForm
 import uuid
 import boto3
@@ -111,10 +112,28 @@ def items_upvote(request, item_id):
   return redirect('index')
 
 def items_downvote(request, item_id):
-  item = Item.objects.get(id=item_id)
-  item.votes -= 1 
-  item.save()
+  try:
+    vote = Vote.objects.get(item=item_id, user=request.user)
+  except Vote.DoesNotExist:
+    vote = None
+  
+  if vote is None:
+    # find item by id and increment 
+    item = Item.objects.get(id=item_id)
+    vote = Vote(item=item, user=request.user)
+    item.votes -= 1 
+    vote.save()
+    item.save()
+  
   return redirect('index')
+
+def profile(request, user_id):
+  user = User.objects.get(id=user_id)
+  profile = Profile.objects.get(user=user_id)
+  items = Item.objects.filter(user=user)
+  print(type(items))
+
+  return render(request, 'profile.html', { 'user': user, 'profile': profile, 'items': items })
 
 def signup(request):
   error_message = ''

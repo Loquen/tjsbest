@@ -9,11 +9,11 @@
       <a href="{% url 'items_detail' item.id %}">
         <span class="card-title">{{ item.title }}</span>
       </a>
+      Author: <a href="{% url 'profile' item.user.id %}">{{ item.user.username | title }}</a>
       <p>Votes: {{ item.votes }}</p>
       <a href="{% url 'upvote' item.id %}"><i class="material-icons">thumb_up</i></a>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <a href="{% url 'downvote' item.id %}"><i class="material-icons">thumb_down</i></a>
-      
     </div>
   </div>
 {% endfor %}
