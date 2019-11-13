@@ -17,10 +17,12 @@
         <p>Categories: {{ item.categories }}</p>
         <p>Zipcodes: {{ item.zipcodes }}</p>
       </div>
-      <div class="card-action">
-        <a href="{% url 'items_update' item.id %}">Edit</a>
-        <a href="{% url 'items_delete' item.id %}">Delete</a>
-      </div>
+      {% if user == item.user %}
+        <div class="card-action">
+          <a href="{% url 'items_update' item.id %}">Edit</a>
+          <a href="{% url 'items_delete' item.id %}">Delete</a>
+        </div>
+      {% endif %}
     </div>
     <form action="{% url 'add_photo' item.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
