@@ -23,12 +23,17 @@ def about(request):
 class ItemList(ListView):
   model = Item
 
+def items_index(request):
+  item_list = Item.objects.all()  
+  return render(request, 'main_app/item_list.html', {
+    'item_list': item_list,
+  })
+
 # class ItemDetail(DetailView):
 #   model = Item
 def item_detail(request, item_id):
   item = Item.objects.get(id=item_id)
   comments = Comment.objects.filter(item=item_id)
-  print(comments)
   comment_form = CommentForm()
   return render(request, 'items/detail.html', {
     'item': item,
@@ -46,6 +51,18 @@ def add_comment(request, item_id):
     new_comment.user = request.user
     new_comment.save()
   return redirect('items_detail', item_id=item_id)
+
+@login_required
+def add_zipcode(request, item_id):
+  # form = ItemForm(request.POST)
+  # print(form['zipcodes'].value)
+  if request.method == 'POST':
+    item = Item.objects.get(id=item_id)
+    new_zipcode = request.POST.get('zipcode')
+    item.zipcodes.append(new_zipcode)
+    item.save()
+  return redirect('items_detail', item_id=item_id)
+
 
 @login_required
 def remove_comment(request, item_id, comment_id):
@@ -131,7 +148,6 @@ def profile(request, user_id):
   user = User.objects.get(id=user_id)
   profile = Profile.objects.get(user=user_id)
   items = Item.objects.filter(user=user)
-  print(type(items))
 
   return render(request, 'profile.html', { 'user': user, 'profile': profile, 'items': items })
 

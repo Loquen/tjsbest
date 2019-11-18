@@ -14,8 +14,16 @@
           <img class="item-image" src="https://placebear.com/g/300/300" alt="Item Placeholder Image">
         {% endif %}
         <p>Votes: {{ item.votes }}</p>
-        <p>Categories: {{ item.categories }}</p>
-        <p>Zipcodes: {{ item.zipcodes }}</p>
+        <p>Categories: {{ item.categories.1 }}</p>
+        <p>Zipcodes: 
+          {% for zip in item.zipcodes %}
+            {% if item.zipcodes.0 != zip %}
+              ,
+            {% endif %}
+            
+            {{ zip }}
+          {% endfor %}
+        </p>
       </div>
       {% if user == item.user %}
         <div class="card-action">
@@ -24,14 +32,23 @@
         </div>
       {% endif %}
     </div>
+    {% if user == item.user %}
     <form action="{% url 'add_photo' item.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
       <input type="file" name="photo-file">
       <br><br>
       <input type="submit" class="btn" value="Upload Photo">
     </form>
+    {% endif %}
   </div>
   <div class="col s6">
+    <form action="{% url 'add_zipcode' item.id %}" method="post">
+      {% csrf_token %}
+      <label for="zipcode">Enter a Zipcode:</label>
+      <input type="text" id="zipcode" name="zipcode">
+      <br><br>
+      <input type="submit" class="btn" value="Add Zipcode">
+    </form>
     <form action="{% url 'add_comment' item.id %}" method="post">
       {% csrf_token %}
       {{ comment_form.as_p }}
