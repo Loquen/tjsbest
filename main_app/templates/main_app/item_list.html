@@ -25,6 +25,14 @@
         </div>
         <div class="card-content">
           Author: <a href="{% url 'profile' item.user.id %}">{{ item.user.username | title }}</a>
+          <p>Category: 
+            {% for cat in item.categories %}
+              {% if item.categories.0 != cat %}
+                ,
+              {% endif %}
+              {{ cat }}
+            {% endfor %}
+          </p>
           <p>Votes: {{ item.votes }}</p>
           <a href="{% url 'upvote' item.id %}"><i class="material-icons">thumb_up</i></a>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -45,13 +53,23 @@
   function search(event){
     let input = document.getElementById('search').value;
     let query = input.toString().toLowerCase().trim();
-    document.querySelectorAll('.card').forEach(event => {
-      // console.log(event.lastElementChild.firstElementChild.textContent);
-      if(event.lastElementChild.firstElementChild.textContent.toLowerCase().includes(query)){
-        // console.log(event.firstElementChild.textContent);
-        event.style.display = 'block';
+    document.querySelectorAll('.card').forEach(item => {
+      if(item.lastElementChild.firstElementChild.textContent.toLowerCase().includes(query)){
+        item.style.display = 'block';
       } else {
-        event.style.display = 'none';
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  function filter(event){
+    let input = document.getElementById('filter').value;
+    let filterOption = input.toString().toLowerCase();
+    document.querySelectorAll('.card').forEach(event => {
+      if(item.lastElementChild.firstElementChild.textContent.toLowerCase().includes(filterOption)){
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
       }
     });
   }
