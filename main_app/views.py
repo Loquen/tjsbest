@@ -24,7 +24,19 @@ class ItemList(ListView):
   model = Item
 
 def items_index(request):
-  item_list = Item.objects.all()  
+  item_list = Item.objects.all() 
+
+  # for item in item_list:
+  #   for cat in item.categories:
+  #     cat = int(cat)
+
+  # for idx, item in enumerate(item_list):
+  #   for i, cat in item.categories:
+  #     item_list[idx].categories[i]
+
+
+  # print(type(item_list[0].categories[0])) 
+
   return render(request, 'main_app/item_list.html', {
     'item_list': item_list,
   })
@@ -71,7 +83,7 @@ def remove_comment(request, item_id, comment_id):
 
 class ItemCreate(LoginRequiredMixin, CreateView):
   model = Item
-  fields = ['title', 'zipcodes', 'categories']
+  fields = ['title', 'zipcodes', 'category']
   success_url = '/items/'
 
   def form_valid(self, form):
@@ -82,7 +94,7 @@ class ItemCreate(LoginRequiredMixin, CreateView):
 
 class ItemUpdate(LoginRequiredMixin, UpdateView):
   model = Item
-  fields = ['title', 'zipcodes', 'categories']
+  fields = ['title', 'zipcodes', 'category']
   success_url = '/items/'
 
 class ItemDelete(LoginRequiredMixin, DeleteView):

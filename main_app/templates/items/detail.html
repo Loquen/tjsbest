@@ -14,7 +14,7 @@
           <img class="item-image" src="https://placebear.com/g/300/300" alt="Item Placeholder Image">
         {% endif %}
         <p>Votes: {{ item.votes }}</p>
-        <p>Categories: {{ item.categories.1 }}</p>
+        <p>Category: {{ item.get_category_display }}</p>
         <p>Zipcodes: 
           {% for zip in item.zipcodes %}
             {% if item.zipcodes.0 != zip %}

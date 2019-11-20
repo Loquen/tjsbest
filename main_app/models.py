@@ -24,7 +24,7 @@ class Item(models.Model):
   status = models.BooleanField(default=False)
   amazon_id = models.CharField(max_length=100, default='')
   image_url = models.CharField(max_length=200, default='')
-  categories = models.CharField(
+  category = models.CharField(
     max_length=1,
     choices=CATEGORIES,
     default=CATEGORIES[0][0]

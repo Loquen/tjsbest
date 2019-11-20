@@ -25,14 +25,7 @@
         </div>
         <div class="card-content">
           Author: <a href="{% url 'profile' item.user.id %}">{{ item.user.username | title }}</a>
-          <p>Category: 
-            {% for cat in item.categories %}
-              {% if item.categories.0 != cat %}
-                ,
-              {% endif %}
-              {{ cat }}
-            {% endfor %}
-          </p>
+          <p>Category: {{ item.get_category_display }}</p>
           <p>Votes: {{ item.votes }}</p>
           <a href="{% url 'upvote' item.id %}"><i class="material-icons">thumb_up</i></a>
           &nbsp;&nbsp;&nbsp;&nbsp;
