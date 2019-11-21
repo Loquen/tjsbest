@@ -9,9 +9,6 @@
 </div>
 <div class="row">
   <div class="col s12 m 12">
-    <!-- <input class="filter-bar" id="filter" type="select" name="filter" onchange=filter(event)>
-  
-    </input> -->
     <select id="filter" onchange=filter(event)>
       {% for category in categories %}
         <option value="{{ category }}">{{ category }}</option>
@@ -22,7 +19,6 @@
 <div class="row item-list">
 {% for item in item_list %}
 {% if item.status %}
-  <!-- <div class="col s12 m6"> -->
     <div class="card">
         <div class="card-image">
           {% if item.image_url != '' %}
@@ -34,7 +30,6 @@
               <img class="item-image" src="https://placebear.com/g/300/300" alt="Item Placeholder">
             </a>
           {% endif %}
-          <!-- <span class="card-title">{{ item.title }}</span> -->
         </div>
         <div class="card-content">
           Author: <a href="{% url 'profile' item.user.id %}">{{ item.user.username | title }}</a>
