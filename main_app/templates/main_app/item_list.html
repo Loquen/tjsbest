@@ -7,6 +7,18 @@
     <input class="search-bar" id="search" type="text" name="query" onkeyup=search(event) placeholder="Search by Name"></input>
   </div>
 </div>
+<div class="row">
+  <div class="col s12 m 12">
+    <!-- <input class="filter-bar" id="filter" type="select" name="filter" onchange=filter(event)>
+  
+    </input> -->
+    <select id="filter" onchange=filter(event)>
+      {% for category in categories %}
+        <option value="{{ category }}">{{ category }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
 <div class="row item-list">
 {% for item in item_list %}
 {% if item.status %}
@@ -43,6 +55,9 @@
 </div>
 
 <script defer>
+  let selectEl = document.getElementById('filter');
+  M.FormSelect.init(selectEl);
+
   function search(event){
     let input = document.getElementById('search').value;
     let query = input.toString().toLowerCase().trim();
@@ -68,5 +83,6 @@
       }
     });
   }
+  
 </script>
 {% endblock %}

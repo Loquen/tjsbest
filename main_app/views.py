@@ -25,20 +25,16 @@ class ItemList(ListView):
 
 def items_index(request):
   item_list = Item.objects.all() 
+  categories = set(())
 
-  # for item in item_list:
-  #   for cat in item.categories:
-  #     cat = int(cat)
+  for item in item_list:
+    categories.add(item.get_category_display())
 
-  # for idx, item in enumerate(item_list):
-  #   for i, cat in item.categories:
-  #     item_list[idx].categories[i]
-
-
-  # print(type(item_list[0].categories[0])) 
+  # print(categories)
 
   return render(request, 'main_app/item_list.html', {
     'item_list': item_list,
+    'categories': categories
   })
 
 # class ItemDetail(DetailView):
