@@ -13,6 +13,25 @@ footer {
   text-align: right;
 }
 
-.item-image {
-  height: 300px;
+/* .item-image {
+  max-height: 200px;
+  max-width: 250px;
+}  */
+
+.card-image {
+  width: 300px;
+  /* height: 250px; */
+}
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-list .card {
+  width: 40%;
+  padding: 20px;
+  margin: 30px;
 }

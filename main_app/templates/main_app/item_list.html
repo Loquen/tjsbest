@@ -7,11 +7,11 @@
     <input class="search-bar" id="search" type="text" name="query" onkeyup=search(event) placeholder="Search by Name"></input>
   </div>
 </div>
-<div class="row">
+<div class="row item-list">
 {% for item in item_list %}
 {% if item.status %}
-  <div class="col s12 m6">
-    <div class="card large horizontal">
+  <!-- <div class="col s12 m6"> -->
+    <div class="card">
         <div class="card-image">
           {% if item.image_url != '' %}
             <a href="{% url 'items_detail' item.id %}">
@@ -22,6 +22,7 @@
               <img class="item-image" src="https://placebear.com/g/300/300" alt="Item Placeholder">
             </a>
           {% endif %}
+          <!-- <span class="card-title">{{ item.title }}</span> -->
         </div>
         <div class="card-content">
           Author: <a href="{% url 'profile' item.user.id %}">{{ item.user.username | title }}</a>
@@ -37,11 +38,10 @@
           </a>
         </div>
     </div>
-  </div>
-  {% endif %}
+{% endif %}
 {% endfor %}
 </div>
-</div>
+
 <script defer>
   function search(event){
     let input = document.getElementById('search').value;
@@ -61,8 +61,10 @@
     document.querySelectorAll('.card').forEach(event => {
       if(item.lastElementChild.firstElementChild.textContent.toLowerCase().includes(filterOption)){
         item.style.display = 'block';
+        console.log(item);
       } else {
         item.style.display = 'none';
+        console.log(item);
       }
     });
   }
