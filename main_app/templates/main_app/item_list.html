@@ -68,13 +68,14 @@
   function filter(event){
     let input = document.getElementById('filter').value;
     let filterOption = input.toString().toLowerCase();
-    document.querySelectorAll('.card').forEach(event => {
-      if(item.lastElementChild.firstElementChild.textContent.toLowerCase().includes(filterOption)){
+    console.log(filterOption);
+    document.querySelectorAll('.card').forEach(item => {
+      if(item.childNodes[3].childNodes[3].textContent.toLowerCase().includes(filterOption)){
         item.style.display = 'block';
-        console.log(item);
+        console.log(item.childNodes[3].childNodes[3].textContent);
       } else {
         item.style.display = 'none';
-        console.log(item);
+        console.log(item.childNodes[3].childNodes[3].textContent);
       }
     });
   }
