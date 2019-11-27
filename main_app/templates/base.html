@@ -24,6 +24,7 @@
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'index' %}">All Items</a></li>
             <li><a href="{% url 'items_create' %}">Add Item</a></li>
+            <li><a href="{% url 'profile' request.user.id %}">My Profile</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
             <li><a href="{% url 'index' %}">All Items</a></li>
