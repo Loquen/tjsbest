@@ -37,8 +37,10 @@
             <td><strong>Favorite Item:</strong></td>
             {% if profile.favorite_item %}
               <td><a class="blue-text text-darken-2" href="{% url 'items_detail' profile.favorite_item.id %}">{{profile.favorite_item}}</a></td>
-            {% else %}
+            {% elif request.user == user %}
               <td><a class="green-text text-darken-2" href="{% url 'index' %}">Pick a favorite!</a></td>
+            {% else %}
+              <td>No Favorite Item</td>
             {% endif %}
           </tr>
         </tbody>

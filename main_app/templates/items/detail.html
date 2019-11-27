@@ -27,19 +27,29 @@
           {% endfor %}
         </p>
       </div>
-      {% if user == item.user %}
-        <div class="card-action">
+      <div class="card-action">
+        {% if user == item.user %}
           <a href="{% url 'items_update' item.id %}">Edit</a>
           <a href="{% url 'items_delete' item.id %}">Delete</a>
-        </div>
-      {% endif %}
+        {% endif %}
+        <a class="green-text text-darken-2" href="{% url 'favorite' item.id %}">
+          Favorite!
+        </a>
+      </div>
     </div>
     {% if user == item.user %}
-    <form action="{% url 'add_photo' item.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+    <form action="{% url 'add_photo' item.id %}" enctype="multipart/form-data" method="POST">
       {% csrf_token %}
-      <input type="file" name="photo-file">
-      <br><br>
-      <input type="submit" class="btn blue-grey lighten-2" value="Upload Photo">
+      <div class="file-field input-field">
+        <div class="btn blue-grey lighten-2">
+          <span>Choose Photo</span>
+          <input type="file" name="photo-file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+        <input type="submit" class="btn blue-grey lighten-2" value="Upload Photo">
+      </div>
     </form>
     {% endif %}
   </div>

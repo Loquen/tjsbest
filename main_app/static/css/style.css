@@ -41,6 +41,6 @@ footer {
   margin: 30px;
 }
 
-input.add-item {
-  margin: 30px;
+.btn-spacer {
+  margin: 0 10px;
 }
