@@ -15,7 +15,7 @@ S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'collectorofcats'
 
 def home(request):
-  return render(request, 'home.html')
+  return redirect('index')
 
 def about(request):
   return render(request, 'about.html')
