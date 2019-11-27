@@ -18,9 +18,14 @@ footer {
   max-width: 250px;
 }  */
 
+
 .card-image {
   width: 300px;
   /* height: 250px; */
+}
+
+.card-image img {
+  object-fit: contain;
 }
 
 .item-list {
@@ -33,5 +38,9 @@ footer {
 .item-list .card {
   width: 40%;
   padding: 20px;
+  margin: 30px;
+}
+
+input.add-item {
   margin: 30px;
 }
