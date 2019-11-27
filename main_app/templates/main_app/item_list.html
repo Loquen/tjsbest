@@ -44,6 +44,9 @@
           <a class="blue-text text-darken-2" href="{% url 'items_detail' item.id %}">
             {{ item.title }}
           </a>
+          <a class="green-text text-darken-2" href="{% url 'favorite' item.id %}">
+            Favorite!
+          </a>
         </div>
     </div>
 {% endif %}

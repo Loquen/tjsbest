@@ -7,13 +7,13 @@
       {% for item in items %}
         <div class="card">
           <div class="card-content">
-            <a href="{% url 'items_detail' item.id %}">
+            <a class="blue-text text-darken-2" href="{% url 'items_detail' item.id %}">
               <span class="card-title">{{ item.title }}</span>
             </a>
             <p>Votes: {{ item.votes }}</p>
-            <a href="{% url 'upvote' item.id %}"><i class="material-icons">thumb_up</i></a>
+            <a href="{% url 'upvote' item.id %}"><i class="material-icons blue-text text-darken-2">thumb_up</i></a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{% url 'downvote' item.id %}"><i class="material-icons">thumb_down</i></a>
+            <a href="{% url 'downvote' item.id %}"><i class="material-icons red-text">thumb_down</i></a>
           </div>
         </div>
       {% endfor %}
@@ -27,16 +27,20 @@
         <tbody>
           <tr>
             <td><strong>Number of Items posted:</strong></td>
+            <td>{{items | length}}</td>
           </tr>
-          <!-- {% for comment in item.comment_set.all %}
-            <tr>
-              <td><strong>{{comment.user.username|title}}</strong></td>
-              <td>{{comment.text}}</td>
-              {% if user == comment.user %}
-                <td><a href="{% url 'remove_comment' item.id comment.id %}">Delete</a></td>
-              {% endif %}
-            </tr>
-          {% endfor %} -->
+          <tr>
+            <td><strong>Number of Comments posted:</strong></td>
+            <td>{{items.comment_set.all | length}}</td>
+          </tr>
+          <tr>
+            <td><strong>Favorite Item:</strong></td>
+            {% if profile.favorite_item %}
+              <td><a class="blue-text text-darken-2" href="{% url 'items_detail' profile.favorite_item.id %}">{{profile.favorite_item}}</a></td>
+            {% else %}
+              <td><a class="green-text text-darken-2" href="{% url 'index' %}">Pick a favorite!</a></td>
+            {% endif %}
+          </tr>
         </tbody>
       </table>
     </div>

@@ -71,7 +71,6 @@ def add_zipcode(request, item_id):
     item.save()
   return redirect('items_detail', item_id=item_id)
 
-
 @login_required
 def remove_comment(request, item_id, comment_id):
   Comment.objects.get(id=comment_id).delete()
@@ -158,6 +157,14 @@ def profile(request, user_id):
   items = Item.objects.filter(user=user)
 
   return render(request, 'profile.html', { 'user': user, 'profile': profile, 'items': items })
+
+@login_required
+def add_favorite_item(request, item_id):
+  profile = Profile.objects.get(user=request.user)
+  item = Item.objects.get(id=item_id)
+  profile.favorite_item = item
+  profile.save()
+  return redirect('profile', user_id=request.user.id)
 
 def signup(request):
   error_message = ''
