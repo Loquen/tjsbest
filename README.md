@@ -16,7 +16,7 @@ Check the site out [here](http://tjsbest.herokuapp.com/)
 
 ### Next Steps:
  * Redesign 
- * Deploy to domain tjsbest.comt -m
+ * Deploy to domain tjsbest.com
 
 ### Screenshots:
   ![Imgur](https://i.imgur.com/dPBlXf5.png)
