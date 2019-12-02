@@ -19,7 +19,7 @@ Check the site out [here](http://bandtogether-lmj.herokuapp.com/)
 
 ### Next Steps:
  * Redesign 
- * Deploy to domain tjsbest.com
+ * Deploy to domain tjsbest.comt -m
 
 ### Screenshots:
   ![Imgur](https://i.imgur.com/dPBlXf5.png)
