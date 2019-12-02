@@ -11,6 +11,7 @@
   <div class="col s12 m 12">
     <label for="filter">Filter by Category:</label>
     <select name="filter" id="filter" onchange=filter(event)>
+      <option value="All Items">All Items</option>
       {% for category in categories %}
         <option value="{{ category }}">{{ category }}</option>
       {% endfor %}
@@ -72,14 +73,15 @@
   function filter(event){
     let input = document.getElementById('filter').value;
     let filterOption = input.toString().toLowerCase();
-    console.log(filterOption);
     document.querySelectorAll('.card').forEach(item => {
-      if(item.childNodes[3].childNodes[3].textContent.toLowerCase().includes(filterOption)){
+      if(filterOption === 'all items'){
         item.style.display = 'block';
-        console.log(item.childNodes[3].childNodes[3].textContent);
       } else {
-        item.style.display = 'none';
-        console.log(item.childNodes[3].childNodes[3].textContent);
+        if(item.childNodes[3].childNodes[3].textContent.toLowerCase().includes(filterOption)){
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
       }
     });
   }

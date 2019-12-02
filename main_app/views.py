@@ -24,21 +24,17 @@ class ItemList(ListView):
   model = Item
 
 def items_index(request):
-  item_list = Item.objects.all() 
+  item_list = Item.objects.order_by('-votes') 
   categories = set(())
 
   for item in item_list:
     categories.add(item.get_category_display())
-
-  # print(categories)
 
   return render(request, 'main_app/item_list.html', {
     'item_list': item_list,
     'categories': categories
   })
 
-# class ItemDetail(DetailView):
-#   model = Item
 def item_detail(request, item_id):
   item = Item.objects.get(id=item_id)
   comments = Comment.objects.filter(item=item_id)
@@ -154,7 +150,7 @@ def items_downvote(request, item_id):
 def profile(request, user_id):
   user = User.objects.get(id=user_id)
   profile = Profile.objects.get(user=user_id)
-  items = Item.objects.filter(user=user)
+  items = Item.objects.filter(user=user).order_by('title')
 
   return render(request, 'profile.html', { 'user': user, 'profile': profile, 'items': items })
 
