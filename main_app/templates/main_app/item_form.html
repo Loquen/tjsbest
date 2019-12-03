@@ -2,7 +2,7 @@
 
 {% block content %}
   {% if object %}
-    <h1>Edit <span class="teal-text">{{object.title}}</span></h1>
+    <h1>Edit {{object.title}}</h1>
   {% else %}
     <h1>Add Item</h1>
   {% endif %}
@@ -18,7 +18,7 @@
   </form>
 
   <script>
-    var selectEl = document.getElementById('id_categories');
+    var selectEl = document.getElementById('id_category');
     M.FormSelect.init(selectEl);
   </script>
 {% endblock %}
