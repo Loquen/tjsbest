@@ -58,8 +58,6 @@ def add_comment(request, item_id):
 
 @login_required
 def add_zipcode(request, item_id):
-  # form = ItemForm(request.POST)
-  # print(form['zipcodes'].value)
   if request.method == 'POST':
     item = Item.objects.get(id=item_id)
     new_zipcode = request.POST.get('zipcode')
@@ -78,8 +76,6 @@ class ItemCreate(LoginRequiredMixin, CreateView):
   success_url = '/items/'
 
   def form_valid(self, form):
-    # form.instance.votes = 1
-    # form.instance.status = False
     form.instance.user = self.request.user
     return super().form_valid(form)
 
@@ -138,7 +134,7 @@ def items_downvote(request, item_id):
     vote = None
   
   if vote is None:
-    # find item by id and increment 
+    # find item by id and decrement 
     item = Item.objects.get(id=item_id)
     vote = Vote(item=item, user=request.user)
     item.votes -= 1 
@@ -151,6 +147,8 @@ def profile(request, user_id):
   user = User.objects.get(id=user_id)
   profile = Profile.objects.get(user=user_id)
   items = Item.objects.filter(user=user).order_by('title')
+
+  print(items)
 
   return render(request, 'profile.html', { 'user': user, 'profile': profile, 'items': items })
 

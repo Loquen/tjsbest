@@ -14,6 +14,8 @@ CATEGORIES = (
   ('2', 'Desserts'),
   ('3', 'Beverages'),
   ('4', 'Alcohol'),
+  ('5', 'Dinner'),
+  ('6', 'Breakfast'),
 )
 
 # Extension of built in User
